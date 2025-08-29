@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Zone - Checkout</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+   
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <span class="text-light fs-5 fw-semibold">Welcome, <span id="currentUser">Guest</span></span>
+        <a class="navbar-brand" href="home.html">
+            <i class="fas fa-laptop"></i> PC Zone
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="home.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="bestsellers.html">Best Sellers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="laptops.html">Laptops</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="accessories.html">Accessories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="faq.html">FAQ</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Payment Page -->
+<main class="payment-page py-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <!-- Payment Form -->
+            <div class="col-lg-8">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Secure Checkout</h4>
+                    </div>
+                    <div class="card-body">
+                        <!-- Progress Indicator -->
+                        <div class="checkout-progress mb-4">
+                            <div class="row text-center">
+                                <div class="col-4">
+                                    <div class="progress-step active">
+                                        <i class="fas fa-shopping-cart"></i>
+                                        <span>Cart</span>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="progress-step active">
+                                        <i class="fas fa-credit-card"></i>
+                                        <span>Payment</span>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="progress-step">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Confirmation</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Shipping Information -->
+                        <h5 class="mb-3">Shipping Information</h5>
+                        <form id="paymentForm" class="needs-validation" novalidate>
+                            <div class="row g-3 mb-4 form-section">
+                                <div class="col-md-6">
+                                    <label for="firstName" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="firstName" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lastName" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="lastName" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="address" class="form-label">Address</label>
+                                    <input type="text" class="form-control" id="address" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="state" class="form-label">State</label>
+                                    <select class="form-select" id="state" required>
+                                        <option value="">Choose...</option>
+                                        <option>Perak</option>
+                                        <option>Kuala Lumpur</option>
+                                        <option>Penang</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-5">
+                                    <label for="city" class="form-label">City</label>
+                                    <select class="form-select" id="city" required>
+                                        <option value="">Choose...</option>
+                                        <option>Ipoh</option>
+                                        <option>Subang Jaya</option>
+                                        <option>Bayan Lepas</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="zip" class="form-label">Zip Code</label>
+                                    <input type="text" class="form-control" id="zip" required>
+                                </div>
+                            </div>
+
+                            <!-- Payment Information -->
+                            <h5 class="mb-3">Payment Information</h5>
+                            <div class="row g-3 form-section">
+                                <div class="col-12">
+                                    <label for="cardName" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="cardName" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="cardNumber" class="form-label">Card Number</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="cardNumber" placeholder="0000 0000 0000 0000" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="expMonth" class="form-label">Expiry Month</label>
+                                    <select class="form-select" id="expMonth" required>
+                                        <option value="">Month</option>
+                                        <option>01</option>
+                                        <option>02</option>
+                                        <option>03</option>
+                                        <option>04</option>
+                                        <option>05</option>
+                                        <option>06</option>
+                                        <option>07</option>
+                                        <option>08</option>
+                                        <option>09</option>
+                                        <option>10</option>
+                                        <option>11</option>
+                                        <option>12</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="expYear" class="form-label">Expiry Year</label>
+                                    <select class="form-select" id="expYear" required>
+                                        <option value="">Year</option>
+                                        <option>2025</option>
+                                        <option>2026</option>
+                                        <option>2027</option>
+                                        <option>2028</option>
+                                        <option>2029</option>
+                                        <option>2030</option>
+                                        <option>2031</option>
+                                        <option>2032</option>
+                                        <option>2033</option>
+                                        <option>2034</option>
+                                        <option>2035</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="cvv" class="form-label">CVV</label>
+                                    <input type="text" class="form-control" id="cvv" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <input type="text" class="form-control" id="phone" required>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="col-lg-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Order Summary</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="order-summary">
+                            <div id="orderItems">
+                                <!-- Order items will be loaded dynamically -->
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Subtotal:</span>
+                                <span id="subtotal">RM0.00</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Shipping:</span>
+                                <span id="shipping">RM10.00</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Tax:</span>
+                                <span id="tax">RM0.00</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between mb-4">
+                                <strong>Total:</strong>
+                                <strong id="total">RM0.00</strong>
+                            </div>
+                            <button class="btn btn-primary w-100" onclick="processPayment()">
+                                Complete Order
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>PC Zone</h5>
+                <p>Your trusted technology partner since 2020. We provide the latest gadgets and excellent customer service.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div class="col-md-2">
+                <h5>Shop</h5>
+                <ul class="list-unstyled">
+                    <li><a href="laptops.html" onclick="showPage('laptop')">Laptops</a></li>
+                    <li><a href="accessories.html" onclick="showPage('accessories')">Accessories</a></li>
+                    <li><a href="best-sellers.html" onclick="showPage('best-sell')">Best Sellers</a></li>
+                </ul>
+            </div>
+            
+            <div class="col-md-2">
+                <h5>Support</h5>
+                <ul class="list-unstyled">
+                    <li><a href="contact.html" onclick="showPage('contact')">Contact Us</a></li>
+                    <li><a href="faq.html" onclick="showPage('faq')">FAQ</a></li>
+                </ul>
+            </div>
+            
+            <div class="col-md-4">
+                <h5>Newsletter</h5>
+                <p>Subscribe to get updates on new products and offers.</p>
+                <div class="input-group">
+                    <input type="email" id="newsletterEmail" class="form-control" placeholder="Your email">
+                    <button class="btn btn-primary" type="button" id="subscribeBtn" onclick="handleNewsletterSubscription()">Subscribe</button>
+                </div>
+            </div>
+        </div>
+        
+        <hr style="border-color: #495057;">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>&copy; 2025 PC Zone. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery and Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="script.js"></script>
+<script>
+document.head.insertAdjacentHTML('beforeend', `
+    <style>
+        .checkout-progress {
+            position: relative;
+        }
+        
+        .checkout-progress:before {
+            content: '';
+            position: absolute;
+            top: 24px;
+            left: 15%;
+            right: 15%;
+            height: 2px;
+            background: #e9ecef;
+            z-index: 0;
+        }
+        
+        .progress-step {
+            padding: 15px;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            position: relative;
+            z-index: 1;
+            margin: 0 auto 10px;
+            min-width: 120px;
+            display: inline-block;
+        }
+        
+        .progress-step i {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .progress-step span {
+            font-size: 0.9rem;
+            display: block;
+        }
+        
+        .progress-step.active {
+            background: #0d6efd;
+            color: white;
+            border-color: #0d6efd;
+        }
+        
+        .payment-methods i {
+            color: #6c757d;
+        }
+        
+        .order-summary {
+            font-size: 0.95rem;
+        }
+    </style>
+`);
+
+// Helper function to generate order ID
+function generateOrderId() {
+    return 'ORD-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+}
+
+// Function to handle the payment submission
+function processPayment() {
+    try {
+        const form = document.getElementById('paymentForm');
+        if (!form.checkValidity()) {
+            form.classList.add('was-validated');
+            return;
+        }
+
+        // Show loading state
+        const submitButton = document.querySelector('button[onclick="processPayment()"]');
+        const originalText = submitButton.innerHTML;
+        submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...';
+        submitButton.disabled = true;
+
+        // Get cart and user details
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user'));
+        
+        if (!cart.length) {
+            throw new Error('Your cart is empty');
+        }
+
+        if (!user) {
+            throw new Error('Please log in to complete your purchase');
+        }
+
+        // Generate order details
+        const orderId = typeof window.generateOrderId === 'function' ? window.generateOrderId() : generateOrderId();
+        const orderDate = new Date().toISOString();
+        const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+        const tax = subtotal * 0.1;
+        const shipping = subtotal > 100 ? 0 : 10;
+        const total = subtotal + tax + shipping;
+
+        const order = {
+            orderId: orderId,
+            userEmail: user.email,
+            items: cart,
+            date: orderDate,
+            subtotal: subtotal,
+            tax: tax,
+            shipping: shipping,
+            total: total,
+            shippingAddress: {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                address: document.getElementById('address').value,
+                state: document.getElementById('state').value,
+                city: document.getElementById('city').value,
+                zip: document.getElementById('zip').value,
+                phone: document.getElementById('phone').value
+            }
+        };
+
+        // Simulate payment processing with proper error handling
+        setTimeout(() => {
+            try {
+                // Save order to order history
+                const orderHistory = JSON.parse(localStorage.getItem('orderHistory') || '[]');
+                orderHistory.push(order);
+                localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
+
+                // Save the current order for the confirmation page
+                localStorage.setItem('lastOrder', JSON.stringify(order));
+
+                // Clear the cart
+                localStorage.removeItem('cart');
+                
+                // Update cart counter if the function exists
+                if (typeof updateCartCounter === 'function') {
+                    updateCartCounter();
+                }
+
+                // Redirect to confirmation page
+                window.location.href = 'confirmation.html';
+            } catch (error) {
+                console.error('Error saving order:', error);
+                alert('There was an error processing your order. Please try again.');
+                
+                // Reset button state
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+            }
+        }, 1500);
+
+    } catch (error) {
+        console.error('Payment processing error:', error);
+        alert(error.message || 'There was an error processing your payment. Please try again.');
+        
+        // Reset the button state if there was an error
+        const submitButton = document.querySelector('button[onclick="processPayment()"]');
+        if (submitButton) {
+            submitButton.innerHTML = 'Complete Order';
+            submitButton.disabled = false;
+        }
+    }
+}
+
+
+// Load order items and calculate totals when page loads
+$(document).ready(function() {
+    loadCart();
+});
+</script>
+
+</body>
+</html>

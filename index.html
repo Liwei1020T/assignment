@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Zone - Your Technology Partner</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+   
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+
+            <span class="text-light fs-5 fw-semibold">Welcome, <span id="currentUser">Guest</span></span>
+     
+        <a class="navbar-brand" href="index.html">
+            <i class="fas fa-laptop"></i> PC Zone
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="bestsellers.html">Best Sellers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="laptops.html">Laptops</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="accessories.html">Accessories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="faq.html">FAQ</a>
+                </li>
+            </ul>
+            
+            <ul class="navbar-nav">
+                <li class="nav-item position-relative">
+                    <a class="nav-link" href="cart.html">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-counter" id="cartCounter">0</span>
+                    </a>
+                </li>
+                <li class="nav-item" id="loginNav">
+                    <a class="nav-link" href="login.html">
+                        <i class="fas fa-user"></i> Login
+                    </a>
+                </li>
+                <li class="nav-item" id="userNav" style="display: none;">
+                    <a class="nav-link" href="#" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Home Page -->
+<div id="home-page" class="current-page">
+     <!-- Global Alert Container -->
+    <div id="globalAlertContainer" class="container"></div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1>Welcome to PC Zone</h1>
+            <p>Your one-stop destination for the latest technology and gadgets</p>
+            <a class="btn btn-warning btn-hero" href="laptops.html">
+                Shop Now <i class="fas fa-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-lg-12">
+                    <h2>Why Choose PC Zone?</h2>
+                    <p class="lead">We provide the best technology solutions for your needs</p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="feature-box">
+                        <i class="fas fa-shipping-fast"></i>
+                        <h4>Fast Shipping</h4>
+                        <p>Free shipping on orders over RM100. Get your products delivered quickly and safely.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-box">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>Warranty</h4>
+                        <p>All products come with comprehensive warranty coverage and excellent customer support.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-box">
+                        <i class="fas fa-headset"></i>
+                        <h4>24/7 Support</h4>
+                        <p>Our dedicated support team is available round the clock to help you with any queries.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Featured Products -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-lg-12">
+                    <h2>Featured Products</h2>
+                    <p class="lead">Check out our most popular items</p>
+                </div>
+            </div>
+            
+            <div class="row" id="featuredProducts">
+                <!-- Products will be loaded via JavaScript -->
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Product Modal -->
+<div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="" alt="" class="img-fluid product-image">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="product-details">
+                            <h3 class="product-price mb-3"></h3>
+                            <div class="product-description"></div>
+                            <div class="product-specs mt-3">
+                                <h4>Specifications:</h4>
+                                <ul class="specs-list"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary add-to-cart-btn">
+                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Social Media Follow Section -->
+<div class="social-follow-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="social-follow-title">Connect With PC Zone</h2>
+                <p class="lead text-muted mb-4">Stay updated with our latest products, exclusive deals, and tech news!</p>
+                
+                <div class="social-follow-buttons">
+                    <a href="https://facebook.com/" class="social-follow-btn social-facebook">
+                        <i class="fab fa-facebook-f"></i>Follow on Facebook
+                    </a>
+                    <a href="https://twitter.com/" class="social-follow-btn social-twitter">
+                        <i class="fab fa-twitter"></i>Follow on Twitter
+                    </a>
+                    <a href="https://instagram.com/" class="social-follow-btn social-instagram">
+                        <i class="fab fa-instagram"></i>Follow on Instagram
+                    </a>
+                    <a href="https://youtube.com/" class="social-follow-btn social-youtube">
+                        <i class="fab fa-youtube"></i>Subscribe YouTube
+                    </a>
+                </div>
+                
+                <!-- Social Media Statistics -->
+                <div class="social-stats">
+                    <div class="row">
+                        <div class="col-md-3 col-6">
+                            <div class="social-stat-item">
+                                <div class="social-stat-number">45.2K</div>
+                                <div class="social-stat-label">Facebook Fans</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="social-stat-item">
+                                <div class="social-stat-number">23.8K</div>
+                                <div class="social-stat-label">Twitter Followers</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="social-stat-item">
+                                <div class="social-stat-number">67.5K</div>
+                                <div class="social-stat-label">Instagram Followers</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="social-stat-item">
+                                <div class="social-stat-number">12.3K</div>
+                                <div class="social-stat-label">YouTube Subscribers</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Newsletter Success Modal -->
+<div class="modal fade" id="newsletterSuccessModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content newsletter-success-modal">
+            <div class="modal-body text-center p-5">
+                <div class="success-animation">
+                    <div class="checkmark-circle">
+                        <div class="checkmark"></div>
+                    </div>
+                </div>
+                <h3 class="success-title mt-4 mb-3">Successfully Subscribed!</h3>
+                <p class="success-message mb-4">Thank you for subscribing to our newsletter. You'll receive updates on new products and exclusive offers.</p>
+                <button type="button" class="btn btn-primary btn-lg" data-bs-dismiss="modal">
+                    <i class="fas fa-check me-2"></i>Great!
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Floating Social Media Sidebar -->
+<div class="social-floating-sidebar">
+    <a href="https://www.facebook.com/" class="social-icon social-facebook" title="Facebook">
+        <i class="fab fa-facebook-f"></i>
+    </a>
+    <a href="https://twitter.com/" class="social-icon social-twitter" title="Twitter">
+        <i class="fab fa-twitter"></i>
+    </a>
+    <a href="https://www.instagram.com/" class="social-icon social-instagram" title="Instagram">
+        <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://www.youtube.com/" class="social-icon social-youtube" title="YouTube">
+        <i class="fab fa-youtube"></i>
+    </a>
+    <a href="https://wa.me/1131609008" class="social-icon social-whatsapp" title="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    <a href="https://www.linkedin.com/" class="social-icon social-linkedin" title="LinkedIn">
+        <i class="fab fa-linkedin-in"></i>
+    </a>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>PC Zone</h5>
+                <p>Your trusted technology partner since 2020. We provide the latest gadgets and excellent customer service.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div class="col-md-2">
+                <h5>Shop</h5>
+                <ul class="list-unstyled">
+                    <li><a href="laptops.html" onclick="showPage('laptop')">Laptops</a></li>
+                    <li><a href="accessories.html" onclick="showPage('accessories')">Accessories</a></li>
+                    <li><a href="best-sellers.html" onclick="showPage('best-sell')">Best Sellers</a></li>
+                </ul>
+            </div>
+            
+            <div class="col-md-2">
+                <h5>Support</h5>
+                <ul class="list-unstyled">
+                    <li><a href="contact.html" onclick="showPage('contact')">Contact Us</a></li>
+                    <li><a href="faq.html" onclick="showPage('faq')">FAQ</a></li>
+                </ul>
+            </div>
+            
+            <div class="col-md-4">
+                <h5>Newsletter</h5>
+                <p>Subscribe to get updates on new products and offers.</p>
+                <div class="input-group">
+                    <input type="email" id="newsletterEmail" class="form-control" placeholder="Your email">
+                    <button class="btn btn-primary" type="button" id="subscribeBtn" onclick="handleNewsletterSubscription()">Subscribe</button>
+                </div>
+            </div>
+        </div>
+        
+        <hr style="border-color: #495057;">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>&copy; 2025 PC Zone. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!-- jQuery and Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<script src="script.js"></script>
+
+<script>
+    $(document).ready(function() {
+        showPage('home');
+    });
+</script>
+</body>
+</html>

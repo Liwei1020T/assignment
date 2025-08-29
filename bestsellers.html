@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Zone - Your Technology Partner</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+   
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+                    <span class="text-light fs-5 fw-semibold">Welcome, <span id="currentUser">Guest</span></span>
+        <a class="navbar-brand" href="index.html">
+            <i class="fas fa-laptop"></i> PC Zone
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="bestsellers.html">Best Sellers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="laptops.html">Laptops</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="accessories.html">Accessories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="faq.html">FAQ</a>
+                </li>
+            </ul>
+            
+            <ul class="navbar-nav">
+                <li class="nav-item position-relative">
+                    <a class="nav-link" href="cart.html">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-counter" id="cartCounter">0</span>
+                    </a>
+                </li>
+                <li class="nav-item" id="loginNav">
+                    <a class="nav-link" href="login.html">
+                        <i class="fas fa-user"></i> Login
+                    </a>
+                </li>
+                <li class="nav-item" id="userNav" style="display: none;">
+                    <a class="nav-link" href="#" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Best Sellers Page -->
+ <main id="bestsellers-page">
+      <div id="globalAlertContainer" class="container"></div>
+    <div class="page-header">
+        <div class="container">
+            <h1>Best Sellers</h1>
+            <p class="lead">Our most popular products loved by customers</p>
+        </div>
+    </div>
+    
+    <section class="py-5">
+        <div class="container">
+            <div class="row" id="bestSellProducts">
+                <!-- Products will be loaded via JavaScript -->
+            </div>
+        </div>
+    </section>
+ </main>
+
+
+
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>PC Zone</h5>
+                <p>Your trusted technology partner since 2020. We provide the latest gadgets and excellent customer service.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div class="col-md-2">
+                <h5>Shop</h5>
+                <ul class="list-unstyled">
+                    <li><a href="laptops.html" onclick="showPage('laptop')">Laptops</a></li>
+                    <li><a href="accessories.html" onclick="showPage('accessories')">Accessories</a></li>
+                    <li><a href="best-sellers.html" onclick="showPage('best-sell')">Best Sellers</a></li>
+                </ul>
+            </div>
+            
+            <div class="col-md-2">
+                <h5>Support</h5>
+                <ul class="list-unstyled">
+                    <li><a href="contact.html" onclick="showPage('contact')">Contact Us</a></li>
+                    <li><a href="faq.html" onclick="showPage('faq')">FAQ</a></li>
+                </ul>
+            </div>
+            
+            <div class="col-md-4">
+                <h5>Newsletter</h5>
+                <p>Subscribe to get updates on new products and offers.</p>
+                <div class="input-group">
+                    <input type="email" id="newsletterEmail" class="form-control" placeholder="Your email">
+                    <button class="btn btn-primary" type="button" id="subscribeBtn" onclick="handleNewsletterSubscription()">Subscribe</button>
+                </div>
+            </div>
+        </div>
+        
+        <hr style="border-color: #495057;">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>&copy; 2025 PC Zone. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Product Modal -->
+<div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="" alt="" class="img-fluid product-image">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="product-details">
+                            <h3 class="product-price mb-3"></h3>
+                            <div class="product-description"></div>
+                            <div class="product-specs mt-3">
+                                <h4>Specifications:</h4>
+                                <ul class="specs-list"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary add-to-cart-btn">
+                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery and Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<script src="script.js"></script>
+<script>
+    $(document).ready(function() {
+        showPage('best-sell');
+    });
+</script>
+</body>
+</html>

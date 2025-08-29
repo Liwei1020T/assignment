@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - PC Zone</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <span class="text-light fs-5 fw-semibold">Welcome, <span id="currentUser">Guest</span></span>
+        <a class="navbar-brand" href="index.html">
+            <i class="fas fa-laptop"></i> PC Zone
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="bestsellers.html">Best Sellers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="laptops.html">Laptops</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="accessories.html">Accessories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="faq.html">FAQ</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Confirmation Page -->
+<main class="confirmation-page py-5 mt-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center p-5">
+                        <div class="mb-4">
+                            <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
+                        </div>
+                        <h2 class="mb-4">Thank You for Your Order!</h2>
+                        <p class="lead mb-4">Your order has been successfully placed.</p>
+                        <div class="order-details text-start my-4">
+                            <h4>Order Details</h4>
+                            <div id="orderInfo">
+                                <!-- Order information will be inserted here -->
+                            </div>
+                        </div>
+                        <div class="shipping-details text-start my-4">
+                            <h4>Shipping Details</h4>
+                            <div id="shippingInfo">
+                                <!-- Shipping information will be inserted here -->
+                            </div>
+                        </div>
+                        <hr class="my-4">
+                        <div class="text-center">
+                            <a href="index.html" class="btn btn-primary me-2">Continue Shopping</a>
+                            <button onclick="printOrder()" class="btn btn-outline-primary">
+                                <i class="fas fa-print me-2"></i>Print Order
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>PC Zone</h5>
+                <p>Your trusted technology partner since 2020. We provide the latest gadgets and excellent customer service.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div class="col-md-2">
+                <h5>Shop</h5>
+                <ul class="list-unstyled">
+                    <li><a href="laptops.html" onclick="showPage('laptop')">Laptops</a></li>
+                    <li><a href="accessories.html" onclick="showPage('accessories')">Accessories</a></li>
+                    <li><a href="best-sellers.html" onclick="showPage('best-sell')">Best Sellers</a></li>
+                </ul>
+            </div>
+            
+            <div class="col-md-2">
+                <h5>Support</h5>
+                <ul class="list-unstyled">
+                    <li><a href="contact.html" onclick="showPage('contact')">Contact Us</a></li>
+                    <li><a href="faq.html" onclick="showPage('faq')">FAQ</a></li>
+                </ul>
+            </div>
+            
+            <div class="col-md-4">
+                <h5>Newsletter</h5>
+                <p>Subscribe to get updates on new products and offers.</p>
+                <div class="input-group">
+                    <input type="email" id="newsletterEmail" class="form-control" placeholder="Your email">
+                    <button class="btn btn-primary" type="button" id="subscribeBtn" onclick="handleNewsletterSubscription()">Subscribe</button>
+                </div>
+            </div>
+        </div>
+        
+        <hr style="border-color: #495057;">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>&copy; 2025 PC Zone. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!-- jQuery and Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get order details from localStorage
+    const orderDetails = JSON.parse(localStorage.getItem('lastOrder'));
+    if (!orderDetails) {
+        window.location.href = 'index.html';
+        return;
+    }
+
+    // Display order information
+    const orderInfo = document.getElementById('orderInfo');
+    orderInfo.innerHTML = `
+        <p><strong>Order ID:</strong> ${orderDetails.orderId}</p>
+        <p><strong>Order Date:</strong> ${new Date(orderDetails.date).toLocaleString()}</p>
+        <p><strong>Email:</strong> ${orderDetails.userEmail}</p>
+        <div class="order-items mt-3">
+            <h5>Items Ordered:</h5>
+            ${orderDetails.items.map(item => `
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span>${item.name} × ${item.quantity}</span>
+                    <span>RM${(item.price * item.quantity).toFixed(2)}</span>
+                </div>
+            `).join('')}
+            <hr>
+            <div class="d-flex justify-content-between">
+                <span>Subtotal:</span>
+                <span>RM${orderDetails.subtotal.toFixed(2)}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+                <span>Shipping:</span>
+                <span>RM${orderDetails.shipping.toFixed(2)}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+                <span>Tax:</span>
+                <span>RM${orderDetails.tax.toFixed(2)}</span>
+            </div>
+            <div class="d-flex justify-content-between fw-bold mt-2">
+                <span>Total:</span>
+                <span>RM${orderDetails.total.toFixed(2)}</span>
+            </div>
+        </div>
+    `;
+
+    // Display shipping information
+    const shippingInfo = document.getElementById('shippingInfo');
+    shippingInfo.innerHTML = `
+        <p><strong>Name:</strong> ${orderDetails.shippingAddress.firstName} ${orderDetails.shippingAddress.lastName}</p>
+        <p><strong>Address:</strong> ${orderDetails.shippingAddress.address}</p>
+        <p><strong>State:</strong> ${orderDetails.shippingAddress.state}</p>
+        <p><strong>ZIP Code:</strong> ${orderDetails.shippingAddress.zip}</p>
+    `;
+});
+
+// Function to print the order
+function printOrder() {
+    window.print();
+}
+</script>
+
+</body>
+</html>
